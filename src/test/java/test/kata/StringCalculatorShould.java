@@ -33,4 +33,16 @@ public class StringCalculatorShould {
         int result = new StringCalculator().add("//.\n5.5.4.3.1.2.5");
         assertThat(result).isEqualTo(25);
     }
+
+    @Test
+    public void allowOnlyPositiveNumbers(){
+        int result = new StringCalculator().add("//.\n5.5.4.-3.1.2.5");
+        assertThat(result).isEqualTo(22);
+    }
+
+    @Test
+    public void allowOnlyNumbersLessThan1000(){
+        int result = new StringCalculator().add("2,1001");
+        assertThat(result).isEqualTo(2);
+    }
 }

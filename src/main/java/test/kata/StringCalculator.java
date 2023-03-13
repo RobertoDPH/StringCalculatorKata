@@ -1,10 +1,5 @@
 package test.kata;
 
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class StringCalculator {
     public int add(String numbers){
         if(numbers.isBlank()){
@@ -23,7 +18,10 @@ public class StringCalculator {
 
         int result = 0;
         for (String number : arrayNumbers) {
-            result += Integer.parseInt(number);
+            int integerNumber = Integer.parseInt(number);
+            if(integerNumber > 0 && integerNumber <= 1000){
+                result += integerNumber;
+            }
         }
 
         if(result != 0){
