@@ -27,4 +27,10 @@ public class StringCalculatorShould {
         int result = new StringCalculator().add("5\n5,4\n3,1,2,5");
         assertThat(result).isEqualTo(25);
     }
+
+    @Test
+    public void allowHandleDifferentDelimitersBetweenNumbers(){
+        int result = new StringCalculator().add("//.\n5.5.4.3.1.2.5");
+        assertThat(result).isEqualTo(25);
+    }
 }
