@@ -1,6 +1,8 @@
 package test.kata;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class StringCalculator {
@@ -9,15 +11,13 @@ public class StringCalculator {
             return 0;
         }
 
-        String[] lines = numbers.split("//.(\\R)");
-        String[] arrayNumbers;
-        if(lines.length == 2){
-            String differentDelimiter = numbers.substring(2,3);
-            arrayNumbers = lines[1].split("[" + differentDelimiter + "]");
+        String delimiter = "";
+        if(numbers.startsWith("//")){
+            delimiter = numbers.substring(2,3);
+            numbers = numbers.substring(4);
         }
-        else{
-            arrayNumbers = numbers.split("[\n,]");
-        }
+
+        String[] arrayNumbers = numbers.split("[\n," + delimiter + "]");
 
         int result = 0;
         List<Integer> negativeNumbers = new ArrayList<>();
@@ -36,6 +36,8 @@ public class StringCalculator {
             }else if(integerNumber <= 1000){
                 result += integerNumber;
             }
+
+            //(integerNumber < 0) ? negativeNumbers.add(integerNumber) :  (integerNumber <= 1000) ? (result += integerNumber);
         }
 
         if(!negativeNumbers.isEmpty()){
