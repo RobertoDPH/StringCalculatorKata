@@ -1,5 +1,8 @@
 package test.kata;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StringCalculator {
     public int add(String numbers){
         if(numbers.isBlank()){
@@ -17,6 +20,7 @@ public class StringCalculator {
         }
 
         int result = 0;
+        List<Integer> negativeNumbers = new ArrayList<>();
         for (String number : arrayNumbers) {
             int integerNumber = -1;
 
@@ -27,9 +31,15 @@ public class StringCalculator {
                 return -1;
             }
 
-            if(integerNumber > 0 && integerNumber <= 1000){
+            if(integerNumber < 0){
+                negativeNumbers.add(integerNumber);
+            }else if(integerNumber <= 1000){
                 result += integerNumber;
             }
+        }
+
+        if(!negativeNumbers.isEmpty()){
+            throw new IllegalArgumentException("negatives not allowed: " + negativeNumbers);
         }
 
         if(result != 0){

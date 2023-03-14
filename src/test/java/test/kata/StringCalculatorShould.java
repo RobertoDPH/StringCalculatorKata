@@ -1,6 +1,8 @@
 package test.kata;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class StringCalculatorShould {
@@ -34,10 +36,9 @@ public class StringCalculatorShould {
         assertThat(result).isEqualTo(25);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void allowOnlyPositiveNumbers(){
         int result = new StringCalculator().add("//.\n5.5.4.-3.1.2.5");
-        assertThat(result).isEqualTo(22);
     }
 
     @Test
