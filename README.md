@@ -1,4 +1,4 @@
-# StringCalculatorKata - Java
+# StringCalculatorKata - Java - TDD
 
 String Calculator
 
