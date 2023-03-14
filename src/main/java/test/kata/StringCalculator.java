@@ -18,7 +18,15 @@ public class StringCalculator {
 
         int result = 0;
         for (String number : arrayNumbers) {
-            int integerNumber = Integer.parseInt(number);
+            int integerNumber = -1;
+
+            try{
+                integerNumber = Integer.parseInt(number);
+            }catch (NumberFormatException error){
+                System.out.println(error);
+                return -1;
+            }
+
             if(integerNumber > 0 && integerNumber <= 1000){
                 result += integerNumber;
             }

@@ -30,7 +30,7 @@ public class StringCalculatorShould {
 
     @Test
     public void allowHandleDifferentDelimitersBetweenNumbers(){
-        int result = new StringCalculator().add("//.\n5.5.4.3.1.2.5");
+        int result = new StringCalculator().add("//-\n5-5-4-3-1-2-5");
         assertThat(result).isEqualTo(25);
     }
 
@@ -44,5 +44,11 @@ public class StringCalculatorShould {
     public void allowOnlyNumbersLessThan1000(){
         int result = new StringCalculator().add("2,1001");
         assertThat(result).isEqualTo(2);
+    }
+
+    @Test
+    public void allowOnlyNumbers(){
+        int result = new StringCalculator().add("r");
+        assertThat(result).isEqualTo(-1);
     }
 }
