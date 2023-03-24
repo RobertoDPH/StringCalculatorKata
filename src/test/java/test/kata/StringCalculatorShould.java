@@ -3,6 +3,7 @@ package test.kata;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class StringCalculatorShould {
     @Test
@@ -37,7 +38,7 @@ public class StringCalculatorShould {
 
     @Test(expected = IllegalArgumentException.class)
     public void allowOnlyPositiveNumbers(){
-        int result = new StringCalculator().add("//.\n5.5.4.-3.1.2.5");
+        new StringCalculator().add("//.\n5.5.4.-3.1.2.5");
     }
 
     @Test
@@ -46,11 +47,8 @@ public class StringCalculatorShould {
         assertThat(result).isEqualTo(2);
     }
 
-    @Test
-    public void allowOnlyNumbers(){
-        int result = new StringCalculator().add("r");
-        assertThat(result).isEqualTo(-1);
-    }
+    @Test(expected = NumberFormatException.class)
+    public void allowOnlyNumbers(){new StringCalculator().add("r");}
 
     @Test
     public void allowDelimitersOfAnyLengthWithAStrictFormat(){

@@ -33,8 +33,15 @@ public class StringCalculator {
 
     private String getDelimiterWithSquareBracket(String delimiterWithBrackets) {
         boolean multipleBrackets = delimiterWithBrackets.contains("][");
-
         return multipleBrackets ? String.join("", delimiterWithBrackets.split("]\\[")) : Pattern.quote(delimiterWithBrackets.substring(1, delimiterWithBrackets.length() - 1));
+    }
+
+    private int convertStringToNumber(String value){
+        try{
+            return Integer.parseInt(value);
+        }catch (NumberFormatException error) {
+            throw new NumberFormatException("");
+        }
     }
 
     public int add(String numbers){
@@ -47,15 +54,8 @@ public class StringCalculator {
 
         int result = 0;
         List<Integer> negativeNumbers = new ArrayList<>();
-        for (String number : arrayNumbers) {
-            int integerNumber = -1;
-
-            try{
-                integerNumber = Integer.parseInt(number);
-            }catch (NumberFormatException error){
-                System.out.println(error);
-                return -1;
-            }
+        for (String stringNumber : arrayNumbers) {
+            int integerNumber = convertStringToNumber(stringNumber);
 
             if(integerNumber < 0){
                 negativeNumbers.add(integerNumber);
