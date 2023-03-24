@@ -1,23 +1,49 @@
 package test.kata;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class StringCalculator {
+
+    public String[] getNumbersWithDelimiter(String numberString,String delimiter){
+        boolean checkDelimiter = numberString.startsWith("//");
+        if(checkDelimiter){
+            numberString = numberString.substring(numberString.indexOf("\n") + 1);
+        }
+        return numberString.split(delimiter);
+    }
+
+    public String getDelimiterFromString(String numbersWithDelimiter){
+        boolean checkDelimiter = numbersWithDelimiter.startsWith("//");
+
+        return checkDelimiter ? getCustomDelimiter(numbersWithDelimiter.substring(2,numbersWithDelimiter.indexOf("\n"))) : getDefaultDelimiter();
+    }
+
+    private String getDefaultDelimiter() {
+        return "[\n,]";
+    }
+
+    private String getCustomDelimiter(String provisionalDelimiter){
+        int indexSquareBracket = provisionalDelimiter.indexOf("[");
+
+        return indexSquareBracket != -1 ? getDelimiterWithSquareBracket(provisionalDelimiter) : provisionalDelimiter;
+    }
+
+    private String getDelimiterWithSquareBracket(String delimiterWithBrackets) {
+        boolean multipleBrackets = delimiterWithBrackets.contains("][");
+
+        return multipleBrackets ? String.join("", delimiterWithBrackets.split("]\\[")) : Pattern.quote(delimiterWithBrackets.substring(1, delimiterWithBrackets.length() - 1));
+    }
+
     public int add(String numbers){
         if(numbers.isBlank()){
             return 0;
         }
 
-        String delimiter = "";
-        if(numbers.startsWith("//")){
-            delimiter = numbers.substring(2,3);
-            numbers = numbers.substring(4);
-        }
-
-        String[] arrayNumbers = numbers.split("[\n," + delimiter + "]");
+        String delimiter = getDelimiterFromString(numbers);
+        String[] arrayNumbers = getNumbersWithDelimiter(numbers, delimiter);
 
         int result = 0;
         List<Integer> negativeNumbers = new ArrayList<>();
@@ -36,8 +62,6 @@ public class StringCalculator {
             }else if(integerNumber <= 1000){
                 result += integerNumber;
             }
-
-            //(integerNumber < 0) ? negativeNumbers.add(integerNumber) :  (integerNumber <= 1000) ? (result += integerNumber);
         }
 
         if(!negativeNumbers.isEmpty()){

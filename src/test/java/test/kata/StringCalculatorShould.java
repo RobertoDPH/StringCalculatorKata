@@ -1,6 +1,5 @@
 package test.kata;
 
-
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +24,7 @@ public class StringCalculatorShould {
     }
 
     @Test
-    public void allowHandleNewLinesBetweenNumbers(){
+        public void allowHandleNewLinesBetweenNumbers(){
         int result = new StringCalculator().add("5\n5,4\n3,1,2,5");
         assertThat(result).isEqualTo(25);
     }
@@ -51,5 +50,24 @@ public class StringCalculatorShould {
     public void allowOnlyNumbers(){
         int result = new StringCalculator().add("r");
         assertThat(result).isEqualTo(-1);
+    }
+
+    @Test
+    public void allowDelimitersOfAnyLengthWithAStrictFormat(){
+        int result = new StringCalculator().add("//[***]\n1***2***3");
+        assertThat(result).isEqualTo(6);
+    }
+
+    @Test
+    public void allowMultipleDelimitersWithAStrictFormat(){
+        int result = new StringCalculator().add("//[*][%]\n1*2%3");
+        assertThat(result).isEqualTo(6);
+    }
+
+    @Test
+    public void convertSplitStringToIntArray(){
+        String[] result = new StringCalculator().getNumbersWithDelimiter("3,4,5,5,6", ",");
+
+        assertThat(result[0]).isEqualTo("3");
     }
 }
