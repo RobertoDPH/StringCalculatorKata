@@ -7,12 +7,12 @@ import java.util.regex.Pattern;
 
 public class StringCalculator {
 
-    public String[] getNumbersWithDelimiter(String numberString,String delimiter){
+    public List<Integer> getNumbersWithDelimiter(String numberString,String delimiter){
         boolean checkDelimiter = numberString.startsWith("//");
         if(checkDelimiter){
             numberString = numberString.substring(numberString.indexOf("\n") + 1);
         }
-        return numberString.split(delimiter);
+        return Arrays.stream(numberString.split(delimiter)).map(this::convertStringToNumber).toList();
     }
 
     public String getDelimiterFromString(String numbersWithDelimiter){
@@ -44,30 +44,38 @@ public class StringCalculator {
         }
     }
 
+    private List<Integer> findNegativeNumbers(List<Integer> numbersList){
+        List<Integer> negativeNumbersList = new ArrayList<>();
+        for (int number: numbersList) {
+            if (number < 0){
+                negativeNumbersList.add(number);
+            }
+        };
+        return negativeNumbersList;
+    }
+
+    private int sumNumbersLowerThan1000(List<Integer> numbersList){
+        int result = 0;
+        for (int number : numbersList) {
+            if(number <= 1000){
+                result += number;
+            }
+        }
+
+        return result;
+    }
+
     public int add(String numbers){
         if(numbers.isBlank()){
             return 0;
         }
 
         String delimiter = getDelimiterFromString(numbers);
-        String[] arrayNumbers = getNumbersWithDelimiter(numbers, delimiter);
+        List<Integer> arrayNumbers = getNumbersWithDelimiter(numbers, delimiter);
+        List<Integer> negativeNumbersList = findNegativeNumbers(arrayNumbers);
+        if(negativeNumbersList.size() > 0){throw new IllegalArgumentException("negatives not allowed: " + negativeNumbersList);}
 
-        int result = 0;
-        List<Integer> negativeNumbers = new ArrayList<>();
-        for (String stringNumber : arrayNumbers) {
-            int integerNumber = convertStringToNumber(stringNumber);
-
-            if(integerNumber < 0){
-                negativeNumbers.add(integerNumber);
-            }else if(integerNumber <= 1000){
-                result += integerNumber;
-            }
-        }
-
-        if(!negativeNumbers.isEmpty()){
-            throw new IllegalArgumentException("negatives not allowed: " + negativeNumbers);
-        }
-
+        int result = sumNumbersLowerThan1000(arrayNumbers);
         if(result != 0){
             return result;
         }

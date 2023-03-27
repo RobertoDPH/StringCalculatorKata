@@ -2,6 +2,8 @@ package test.kata;
 
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -64,8 +66,8 @@ public class StringCalculatorShould {
 
     @Test
     public void convertSplitStringToIntArray(){
-        String[] result = new StringCalculator().getNumbersWithDelimiter("3,4,5,5,6", ",");
+        List<Integer> result = new StringCalculator().getNumbersWithDelimiter("3,4,5,5,6", ",");
 
-        assertThat(result[0]).isEqualTo("3");
+        assertThat(result.get(0)).isEqualTo(3);
     }
 }
